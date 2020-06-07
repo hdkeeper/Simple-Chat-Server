@@ -22,14 +22,14 @@ async def clientHandler(reader, writer):
     while not reader.at_eof():
         try:
             bdata = await reader.readline()
-            msg = bdata.decode()
-            msg = control_seq.sub('', msg).strip()[:MAX_MESSAGE_LEN]
-            if len(msg) == 0:
+            message = bdata.decode()
+            message = control_seq.sub('', message).strip()[:MAX_MESSAGE_LEN]
+            if len(message) == 0:
                 continue
 
             for w in writers:
                 if w != writer:
-                    w.write(f'{msg}\r\n'.encode())
+                    w.write(f'{message}\r\n'.encode())
         
         except Exception as ex:
             logging.error('Exception: %s', str(ex))
