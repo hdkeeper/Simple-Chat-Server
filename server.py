@@ -7,7 +7,7 @@ MAX_MESSAGE_LEN = 180
 CLIENT_SLEEP_TIME = 1
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-control_seq = re.compile(r'\x1b\[([0-9]+~|[A-Z])|[\x00-\x1f\x7f]')
+controlSeq = re.compile(r'\x1b\[([0-9]+~|[A-Z])|[\x00-\x1f\x7f]')
 writers = []
 
 
@@ -23,7 +23,7 @@ async def clientHandler(reader, writer):
         try:
             bdata = await reader.readline()
             message = bdata.decode()
-            message = control_seq.sub('', message).strip()[:MAX_MESSAGE_LEN]
+            message = controlSeq.sub('', message).strip()[:MAX_MESSAGE_LEN]
             if len(message) == 0:
                 continue
 
